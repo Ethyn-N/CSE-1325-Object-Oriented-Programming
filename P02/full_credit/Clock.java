@@ -19,7 +19,7 @@ class Clock {
     }
 
     private String twoDigit(int i){
-        return String.format("%0d", i);
+        return String.format("%02d", i);
     }
 
     public static void main(String[] args) {
