@@ -15,7 +15,11 @@ class Clock {
 
     @Override
     public String toString() {
-        return hours + ":" + minutes + ":" + seconds;
+        return twoDigit(hours) + ":" + twoDigit(minutes) + ":" + twoDigit(seconds);
+    }
+
+    private String twoDigit(int i){
+        return String.format("%0d", i);
     }
 
     public static void main(String[] args) {
@@ -33,6 +37,8 @@ class Clock {
         Clock clock = new Clock(hours, minutes, seconds);
 
         System.out.println("The time is " + clock);
+
+        input.close();
     }
 
 }
