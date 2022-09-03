@@ -11,6 +11,8 @@ class Clock {
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
+
+        rationalize();
     }
 
     public Clock add(int seconds) {
@@ -67,7 +69,6 @@ class Clock {
         int seconds = input.nextInt();
 
         Clock clock = new Clock(hours, minutes, seconds);
-        clock.rationalize();
 
         System.out.println("The time is " + clock);
 
@@ -75,11 +76,9 @@ class Clock {
         int ticks = input.nextInt();
 
         Clock newClock = new Clock(hours, minutes, seconds);
-        newClock.rationalize();
 
         for (int i = 0; i < ticks; i++) {
             newClock = newClock.add(1);
-            newClock.rationalize();
             System.out.println(newClock);
         }
 
@@ -89,7 +88,6 @@ class Clock {
             System.out.print("Seconds to add (0 to continue)? : ");
             addSeconds = input.nextInt();
             newClock = newClock.add(addSeconds);
-            newClock.rationalize();
             System.out.println(newClock);
         } while (addSeconds != 0);
 
