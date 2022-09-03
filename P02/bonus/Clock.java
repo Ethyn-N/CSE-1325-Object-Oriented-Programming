@@ -11,6 +11,8 @@ class Clock {
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
+
+        rationalize();
     }
 
     @Override
@@ -55,7 +57,6 @@ class Clock {
         int seconds = input.nextInt();
 
         Clock clock = new Clock(hours, minutes, seconds);
-        clock.rationalize();
 
         System.out.println("The time is " + clock);
 
