@@ -1,5 +1,3 @@
-package cse1325.P02.extreme_bonus;
-
 import java.util.Scanner;
 
 class Clock {
