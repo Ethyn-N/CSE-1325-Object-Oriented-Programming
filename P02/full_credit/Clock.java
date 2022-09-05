@@ -1,5 +1,3 @@
-package cse1325.P02.full_credit;
-
 import java.util.Scanner;
 
 class Clock {
