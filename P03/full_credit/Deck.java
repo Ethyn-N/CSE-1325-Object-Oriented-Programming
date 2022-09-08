@@ -9,9 +9,10 @@ class Deck {
     }
 
     public Deck() {
+        deck = new Stack<Card>();
         for (int i = Rank.MIN; i <= Rank.MAX; i++) {
-            for (Suit suit: Suit.values()) {
-                Rank rank = new Rank(i);
+            Rank rank = new Rank(i);
+            for (Suit suit: Suit.values()) { 
                 Card card = new Card(rank, suit);
                 deck.push(card);
             }
