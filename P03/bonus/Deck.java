@@ -9,7 +9,6 @@ class Deck {
     }
 
     public Deck() {
-        deck = new Stack<Card>();
         for (int i = Rank.MIN; i <= Rank.MAX; i++) {
             Rank rank = new Rank(i);
             for (Suit suit: Suit.values()) { 
@@ -37,5 +36,5 @@ class Deck {
             return false;
     }
 
-    private Stack<Card> deck;
+    private Stack<Card> deck = new Stack<Card>();
 }
