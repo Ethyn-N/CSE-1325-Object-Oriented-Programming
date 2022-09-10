@@ -24,7 +24,7 @@ class Deck {
 
     public Card deal() {
         if (isEmpty()) 
-            throw new DeckEmpty("Deck is empty!");
+            throw new DeckEmpty("Deck 31 threw class java.util.EmptyStackException!");
         else
             return deck.pop();
     }
