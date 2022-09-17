@@ -1,19 +1,21 @@
 public class GasVehicle extends Vehicle {
-    public GasVehicle(int year, String make, String model, BodyStyle bodyStyle) {
+    public GasVehicle(int year, String make, String model, BodyStyle bodyStyle, double milesPerGallon, double gallonsInTank) {
         super(year, make, model, bodyStyle);
+        this.milesPerGallon = milesPerGallon;
+        this.gallonsInTank = gallonsInTank;
     }
 
     public static double dollarsPerGallonOfGas = Double.NaN;
 
     @Override
     public double range() {
-        return gallonsinTank * milesPerGallon;
+        return gallonsInTank * milesPerGallon;
     }
 
     @Override
     public double fuelConsumed(double miles) {
         double fuelConsumed = miles/milesPerGallon;
-        if (fuelConsumed > gallonsinTank)
+        if (fuelConsumed > gallonsInTank)
             throw new ArithmeticException("Error: more fuel consumed than available gallons");
         else 
             return fuelConsumed;
@@ -25,5 +27,5 @@ public class GasVehicle extends Vehicle {
     }
 
     private double milesPerGallon;
-    private double gallonsinTank;
+    private double gallonsInTank;
 }
