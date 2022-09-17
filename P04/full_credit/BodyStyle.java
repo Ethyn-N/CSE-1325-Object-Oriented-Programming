@@ -1,5 +1,5 @@
 enum BodyStyle {
-    Seden,
+    Sedan,
     Hatchback,
     Minivan,
     Truck,
