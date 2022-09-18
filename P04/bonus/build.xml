@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="P04" default="build">
+  <presetdef name="javac">
+    <javac includeantruntime="false" />
+  </presetdef>
+
+  <target name="build" description="Compile source tree java files">
+    <javac debug="true" failonerror="true">
+      <src path="."/>
+    </javac>
+  </target>
+
+  <target name="clean" description="Clean output files">
+    <delete>
+      <fileset dir=".">
+        <include name="**/*.class"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <javadoc packagenames="vehicles.*"
+           sourcepath="."
+           excludepackagenames="com.dummy.test.doc-files.*"
+           defaultexcludes="yes"
+           destdir="docs/api"
+           author="true"
+           version="true"
+           use="true"
+           windowtitle="vehicles API">
+    <doctitle><![CDATA[<h1>vehicles</h1>]]></doctitle>
+    <bottom><![CDATA[<i>Copyright &#169; 2022 Ethyn Nguyen Licensed as CC BY-
+SA International 4.0</i>]]></bottom>
+    <tag name="license.agreement" scope="all" description="Licensed under:"/>
+  </javadoc>
+</project>
