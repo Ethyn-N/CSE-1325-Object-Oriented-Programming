@@ -1,4 +1,4 @@
-enum BodyStyle {
+public enum BodyStyle {
     Sedan,
     Hatchback,
     Minivan,
