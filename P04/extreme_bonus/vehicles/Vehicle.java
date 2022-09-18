@@ -1,21 +1,15 @@
 package vehicles;
 
 /**
- * Defines an abstract self-propelled ground vehicle such as a car, truck, or SUV
+ * Defines a self-propelled ground vehicle such as a car, truck, or SUV
  *
  * @author             Ethyn Nguyen
  * @version            1.0
  * @since              1.0
  * @license.agreement  Gnu General Public License 3.0
  */
-public abstract class Vehicle {
-    public Vehicle(int year, String make, String model, BodyStyle bodyStyle) {
-        this.year = year;
-        this.make = make;
-        this.model = model;
-        this.bodyStyle = bodyStyle;
-    }
-
+public interface Vehicle {
+    
 /**
  * Calculate how far the vehicle can travel without refueling.
  *
@@ -23,7 +17,7 @@ public abstract class Vehicle {
  * @since              1.0
  * 
  */
-    public abstract double range();
+    public double range();
 
 /**
  * Calculate how much fuel would be consumed to travel a given distance.
@@ -33,7 +27,7 @@ public abstract class Vehicle {
  * @since              1.0
  * 
  */
-    public abstract double fuelConsumed(double miles);
+    public double fuelConsumed(double miles);
 
 /**
  * Calculate the cost of traveling a given distance.
@@ -42,15 +36,5 @@ public abstract class Vehicle {
  * @since              1.0
  * 
  */
-    public abstract double dollarsToTravel(double miles);
-
-    @Override
-    public String toString() {
-        return year + " " + make + " " + model + " " + bodyStyle;
-    }
-
-    private int year;
-    private String make;
-    private String model;
-    private BodyStyle bodyStyle;
+    public double dollarsToTravel(double miles);
 }

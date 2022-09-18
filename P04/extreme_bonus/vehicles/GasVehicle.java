@@ -8,9 +8,12 @@ package vehicles;
  * @since              1.0
  * @license.agreement  Gnu General Public License 3.0
  */
-public class GasVehicle extends Vehicle {
+public class GasVehicle implements Vehicle {
     public GasVehicle(int year, String make, String model, BodyStyle bodyStyle, double milesPerGallon, double gallonsInTank) {
-        super(year, make, model, bodyStyle);
+        this.year = year;
+        this.make = make;
+        this.model = model;
+        this.bodyStyle = bodyStyle;
         this.milesPerGallon = milesPerGallon;
         this.gallonsInTank = gallonsInTank;
     }
@@ -20,12 +23,10 @@ public class GasVehicle extends Vehicle {
  */
     public static double dollarsPerGallonOfGas = Double.NaN;
 
-    @Override
     public double range() {
         return gallonsInTank * milesPerGallon;
     }
 
-    @Override
     public double fuelConsumed(double miles) {
         double fuelConsumed = miles/milesPerGallon;
         if (fuelConsumed > gallonsInTank)
@@ -42,10 +43,19 @@ public class GasVehicle extends Vehicle {
  * @since              1.0
  * 
  */
-    @Override
     public double dollarsToTravel(double miles) {
         return fuelConsumed(miles) * dollarsPerGallonOfGas;
     }
+
+    @Override
+    public String toString() {
+        return year + " " + make + " " + model + " " + bodyStyle;
+    }
+
+    private int year;
+    private String make;
+    private String model;
+    private BodyStyle bodyStyle;
 
     private double milesPerGallon;
     private double gallonsInTank;

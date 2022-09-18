@@ -8,9 +8,12 @@ package vehicles;
  * @since              1.0
  * @license.agreement  Gnu General Public License 3.0
  */
-public class ElectricVehicle extends Vehicle {
+public class ElectricVehicle implements Vehicle {
     public ElectricVehicle(int year, String make, String model, BodyStyle bodyStyle, double whPerMile, double kwhInBattery) {
-        super(year, make, model, bodyStyle);
+        this.year = year;
+        this.make = make;
+        this.model = model;
+        this.bodyStyle = bodyStyle;
         this.whPerMile = whPerMile;
         this.kwhInBattery = kwhInBattery;
     }
@@ -20,12 +23,10 @@ public class ElectricVehicle extends Vehicle {
  */
     public static double centsPerKwhOfElectricty = Double.NaN;
 
-    @Override
     public double range() {
         return kwhInBattery/(whPerMile/1000);
     }
 
-    @Override
     public double fuelConsumed(double miles) {
         double fuelConsumed = miles*(whPerMile/1000);
         if (fuelConsumed > kwhInBattery)
@@ -42,10 +43,19 @@ public class ElectricVehicle extends Vehicle {
  * @since              1.0
  * 
  */
-    @Override
     public double dollarsToTravel(double miles) {
         return fuelConsumed(miles) * (centsPerKwhOfElectricty/100);
     }
+
+    @Override
+    public String toString() {
+        return year + " " + make + " " + model + " " + bodyStyle;
+    }
+
+    private int year;
+    private String make;
+    private String model;
+    private BodyStyle bodyStyle;
 
     private double whPerMile;
     private double kwhInBattery;
