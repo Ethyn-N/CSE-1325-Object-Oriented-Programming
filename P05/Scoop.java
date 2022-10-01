@@ -17,8 +17,13 @@ class Scoop {
             return flavor.toString();
         }
         else {
-            for (MixIn mixin : mixins) {
-                iceCream.append(", " + mixin);
+            for (int i = 0; i < mixins.size(); i++) {
+                if (i == 0) {
+                    iceCream.append(mixins.get(i));
+                }
+                else {
+                    iceCream.append(", " + mixins.get(i));
+                }   
             }
         }
         return iceCream.toString();
