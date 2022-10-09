@@ -33,7 +33,7 @@ public class Emporium {
         return scoops.toArray();
     }
 
-    private ArrayList<MixInFlavor> mixInFlavors;
-    private ArrayList<IceCreamFlavor> iceCreamFlavors;
-    private ArrayList<Scoop> scoops;
+    private ArrayList<MixInFlavor> mixInFlavors = new ArrayList<>();
+    private ArrayList<IceCreamFlavor> iceCreamFlavors = new ArrayList<>();
+    private ArrayList<Scoop> scoops = new ArrayList<>();
 }
