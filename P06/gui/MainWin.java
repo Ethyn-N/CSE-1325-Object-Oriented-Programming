@@ -273,22 +273,46 @@ public class MainWin extends JFrame {
     }
 
     public void onAboutClick() {
-        ImageIcon icon = new ImageIcon("/media/sf_Virtual_Machine/cse1325/P06/gui/ice-cream-logo.png");
-
+        BorderLayout borderLayout = new BorderLayout();
+        borderLayout.setVgap(20);
+        borderLayout.setHgap(5);
         JPanel panel = new JPanel();
         panel.setBackground(new Color(102, 205, 170));
-        panel.setSize(new Dimension(200, 64));
-        panel.setLayout(null);
+        panel.setLayout(borderLayout);
 
-        JLabel label = new JLabel("Turtles are awesome!!! :D");
-        label.setBounds(0, 0, 200, 64);
-        label.setFont(new Font("Arial", Font.BOLD, 11));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(label);
+        Image image = null;
+        URL url = null;
+        try {
+            url = new URL("https://cdn.pixabay.com/photo/2016/06/02/22/13/ice-1432274_1280.png");
+            image = ImageIO.read(url);
+        } catch (MalformedURLException ex) {
+            System.out.println("Malformed URL");
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
 
-        UIManager.put("OptionPane.minimumSize",new Dimension(300, 120));        
-        JOptionPane.showMessageDialog(this, panel, "Customized Message Dialog", JOptionPane.PLAIN_MESSAGE, icon);
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
+        JLabel logo = new JLabel();
+        logo.setIcon(imageIcon);
+        panel.add(logo, BorderLayout.LINE_START);
 
+        JLabel title = new JLabel("<html><center>MICE<br>Mavs Ice Cream Emporium</html>");
+        title.setFont(new Font("Verdana", Font.BOLD, 24));
+        title.setForeground(new Color(205, 101, 136));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        title.setVerticalAlignment(JLabel.CENTER);
+        panel.add(title, BorderLayout.PAGE_START);
+
+        JTextPane about = new JTextPane();
+        about.setContentType("text/html");
+        about.setText("<html><body style=\"font-family: Verdana \"<b><br>Version 0.2<br>Copyright 2022 by Ethyn Nguyen<br>Licensed under GNU GPL 3.0<br>Logo by Schmidsi, per the Pixabay License<br>https://cdn.pixabay.com/photo/2016/06/02/22/13/ice-1432274_1280.png&nbsp&nbsp&nbsp</html>");
+        about.setEditable(false);
+        about.setBackground(null);
+        about.setBorder(null);
+        panel.add(about, BorderLayout.CENTER);
+
+        UIManager.put("OptionPane.minimumSize",new Dimension(500, 500));        
+        JOptionPane.showMessageDialog(this, panel, "About", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void view(Screen screen) {
@@ -300,7 +324,6 @@ public class MainWin extends JFrame {
             display.setText("Scoops: " + Arrays.toString(emporium.scoops()));
         }
     }
-
 
     public enum Screen {
         ICE_CREAM_FLAVORS,
@@ -322,5 +345,4 @@ public class MainWin extends JFrame {
     private Emporium emporium = new Emporium();
     private JLabel display;
     private JMenuItem createScoop;
-
 }
