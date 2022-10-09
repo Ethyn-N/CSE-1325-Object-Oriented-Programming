@@ -1,5 +1,5 @@
 package product;
-class MixIn {
+public class MixIn {
     public MixIn(MixInFlavor flavor, MixInAmount amount) {
         this.flavor = flavor;
         this.amount = amount;

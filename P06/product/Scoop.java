@@ -1,7 +1,7 @@
 package product;
 import java.util.ArrayList;
 
-class Scoop {
+public class Scoop {
     public Scoop(IceCreamFlavor flavor) {
         this.flavor = flavor;
     }

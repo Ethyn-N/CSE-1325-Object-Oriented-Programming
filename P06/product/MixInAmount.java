@@ -1,5 +1,5 @@
 package product;
-enum MixInAmount {
+public enum MixInAmount {
     Light,
     Normal,
     Extra,
