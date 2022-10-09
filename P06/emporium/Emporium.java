@@ -1,7 +1,14 @@
 package emporium;
 import java.util.ArrayList;
 
-class Emporium {
+import product.IceCreamFlavor;
+import product.MixInFlavor;
+import product.MixInAmount;
+import product.MixIn;
+import product.Scoop;
+import product.Item;
+
+public class Emporium {
     public void addMixInFlavor(MixInFlavor flavor) {
         mixInFlavors.add(flavor);
     }
