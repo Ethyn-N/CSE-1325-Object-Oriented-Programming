@@ -121,16 +121,16 @@ public class MainWin extends JFrame {
 
     public void onCreateIceCreamFlavorClick() {
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-        JTextField names = new JTextField(20);
+        JTextField names = new JTextField();
 
         JLabel description = new JLabel("<HTML><br/>Description</HTML>");
-        JTextField descriptions = new JTextField(20); 
+        JTextField descriptions = new JTextField(); 
         
         JLabel cost = new JLabel("<HTML><br/>Cost</HTML>");
-        JTextField costs = new JTextField(20); 
+        JTextField costs = new JTextField(); 
 
         JLabel price = new JLabel("<HTML><br/>Price</HTML>");
-        JTextField prices = new JTextField(20);
+        JTextField prices = new JTextField();
 
         Object[] objects = {  // Array of widgets to display
             name,   names, 
@@ -159,16 +159,16 @@ public class MainWin extends JFrame {
 
     public void onCreateMixInFlavorClick() {
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
-        JTextField names = new JTextField(20);
+        JTextField names = new JTextField();
 
         JLabel description = new JLabel("<HTML><br/>Description</HTML>");
-        JTextField descriptions = new JTextField(20); 
+        JTextField descriptions = new JTextField(); 
         
         JLabel cost = new JLabel("<HTML><br/>Cost</HTML>");
-        JTextField costs = new JTextField(20); 
+        JTextField costs = new JTextField(); 
 
         JLabel price = new JLabel("<HTML><br/>Price</HTML>");
-        JTextField prices = new JTextField(20);
+        JTextField prices = new JTextField();
 
         Object[] objects = {  // Array of widgets to display
             name,   names, 
