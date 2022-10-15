@@ -20,7 +20,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
+import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -38,12 +40,12 @@ public class MainWin extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
 
-        GridBagLayout layout = new GridBagLayout();
-        layout.columnWidths = new int[] 
-            {417, 417, 417};
-        layout.rowHeights   = new int[] 
-            {60, 60, 60, 60, 60, 60, 60, 60, 60, 60};        
-        setLayout(layout);
+        // GridBagLayout layout = new GridBagLayout();
+        // layout.columnWidths = new int[] 
+        //     {417, 417, 417};
+        // layout.rowHeights   = new int[] 
+        //     {60, 60, 60, 60, 60, 60, 60, 60, 60, 60};        
+        // setLayout(layout);
         
         // /////// ////////////////////////////////////////////////////////////////
         // M E N U
@@ -103,13 +105,14 @@ public class MainWin extends JFrame {
         menubar.add(help);
 
         display = new JLabel("", JLabel.CENTER);
+        display.setPreferredSize(new Dimension(150, 100));
         display.setFont(new Font("Verdana", Font.BOLD, 24));
         display.setForeground(new Color(253, 219, 39));
         getContentPane().setBackground(new Color(0, 177, 210));
         Border border = BorderFactory.createLineBorder(Color.ORANGE);
         display.setBorder(border);
 
-        add(display, constraints(1, 4, 1, 1));
+        add(display, BorderLayout.CENTER);
 
         setJMenuBar(menubar);
         setVisible(true);
@@ -280,21 +283,31 @@ public class MainWin extends JFrame {
         panel.setBackground(new Color(102, 205, 170));
         panel.setLayout(borderLayout);
 
-        Image image = null;
-        URL url = null;
+        // Image image = null;
+        // URL url = null;
+        // try {
+        //     url = new URL("https://cdn.pixabay.com/photo/2016/06/02/22/13/ice-1432274_1280.png");
+        //     image = ImageIO.read(url);
+        // } catch (MalformedURLException ex) {
+        //     System.out.println("Malformed URL");
+        // } catch (IOException iox) {
+        //     iox.printStackTrace();
+        // }
+
         try {
-            url = new URL("https://cdn.pixabay.com/photo/2016/06/02/22/13/ice-1432274_1280.png");
-            image = ImageIO.read(url);
-        } catch (MalformedURLException ex) {
-            System.out.println("Malformed URL");
-        } catch (IOException iox) {
-            iox.printStackTrace();
+            BufferedImage image = ImageIO.read(new File("gui/ice-cream-logo.png"));
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
+            JLabel logo = new JLabel();
+            logo.setIcon(imageIcon);
+            panel.add(logo, BorderLayout.LINE_START);
+        } catch(IOException e) {
+            e.printStackTrace();
         }
 
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
-        JLabel logo = new JLabel();
-        logo.setIcon(imageIcon);
-        panel.add(logo, BorderLayout.LINE_START);
+        // ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
+        // JLabel logo = new JLabel();
+        // logo.setIcon(imageIcon);
+        // panel.add(logo, BorderLayout.LINE_START);
 
         JLabel title = new JLabel("<html><center>MICE<br>Mavs Ice Cream Emporium</html>");
         title.setFont(new Font("Verdana", Font.BOLD, 24));
