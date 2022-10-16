@@ -8,6 +8,8 @@ import product.MixIn;
 import product.Scoop;
 import product.Item;
 
+import gui.Canvas;
+
 import java.util.Arrays;
 
 import javax.swing.*;
@@ -19,8 +21,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import javax.swing.border.Border;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -217,6 +222,7 @@ public class MainWin extends JFrame {
     }
 
     public void onCreateIceCreamFlavorClick() {
+        UIManager.put("OptionPane.minimumSize",new Dimension(250, 300));
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
         JTextField names = new JTextField(20);
 
@@ -256,6 +262,7 @@ public class MainWin extends JFrame {
     }
 
     public void onCreateMixInFlavorClick() {
+        UIManager.put("OptionPane.minimumSize",new Dimension(250, 300));
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
         JTextField names = new JTextField(20);
 
@@ -293,6 +300,7 @@ public class MainWin extends JFrame {
     }
 
     public void onCreateScoopClick() {
+        UIManager.put("OptionPane.minimumSize",new Dimension(250, 100));
         IceCreamFlavor flavor = (IceCreamFlavor)JOptionPane.showInputDialog(
             this,
             "What flavor would you like?",
@@ -372,11 +380,14 @@ public class MainWin extends JFrame {
 
     public void onAboutClick() {
         BorderLayout borderLayout = new BorderLayout();
-        borderLayout.setVgap(20);
-        borderLayout.setHgap(5);
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(102, 205, 170));
-        panel.setLayout(borderLayout);
+        //borderLayout.setVgap(20);
+        //borderLayout.setHgap(5);
+        Border border = BorderFactory.createLineBorder(Color.ORANGE);
+        Canvas canvas = new Canvas();
+        //JPanel panel = new JPanel();
+        canvas.setBackground(new Color(102, 205, 170));
+        canvas.setLayout(borderLayout);
+        canvas.setBorder(border);
 
         // Image image = null;
         // URL url = null;
@@ -389,15 +400,16 @@ public class MainWin extends JFrame {
         //     iox.printStackTrace();
         // }
 
-        try {
-            BufferedImage image = ImageIO.read(new File("gui/ice-cream-logo.png"));
-            ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
-            JLabel logo = new JLabel();
-            logo.setIcon(imageIcon);
-            panel.add(logo, BorderLayout.LINE_START);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     BufferedImage image = ImageIO.read(new File("gui/ice-cream-logo.png"));
+        //     ImageIcon imageIcon = new ImageIcon(image);
+        //     JLabel logo = new JLabel();
+        //     logo.setIcon(imageIcon);
+        //     logo.setHorizontalAlignment(JLabel.CENTER);
+        //     canvas.add(logo, BorderLayout.CENTER);
+        // } catch(IOException e) {
+        //     e.printStackTrace();
+        // }
 
         // ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(150, 360, Image.SCALE_DEFAULT));
         // JLabel logo = new JLabel();
@@ -409,18 +421,29 @@ public class MainWin extends JFrame {
         title.setForeground(new Color(205, 101, 136));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.CENTER);
-        panel.add(title, BorderLayout.PAGE_START);
+        canvas.add(title, BorderLayout.PAGE_START);
 
-        JTextPane about = new JTextPane();
-        about.setContentType("text/html");
-        about.setText("<html><body style=\"font-family: Verdana \"<b><br>Version 0.2<br>Copyright 2022 by Ethyn Nguyen<br>Licensed under GNU GPL 3.0<br>Logo by Schmidsi, per the Pixabay License<br>https://cdn.pixabay.com/photo/2016/06/02/22/13/ice-1432274_1280.png&nbsp&nbsp&nbsp</html>");
-        about.setEditable(false);
+        JLabel about = new JLabel();
+        about.setText("<html><body style=\"font-family: Verdana \"<b><br>" 
+                    + "Version 0.2<br>"
+                    + "Copyright 2022 by Ethyn Nguyen<br>"
+                    + "Licensed under GNU GPL 3.0<br>"
+                    + "Logo by Schmidsi, per the Pixabay License<br>"
+                    + "https://pixabay.com/vectors/ice-cream-ice-cream-cone-ice-ball-1429596/<br>"
+                    + "Ice Cream Cone icon by icons 8 https://img.icons8.com/fluency/48/000000/ice-cream-cone.png<br>"
+                    + "Ice cream cone icons created by Superarticons - Flaticon https://www.flaticon.com/free-icons/ice-cream-cone<br>"
+                    + "Ice Cream Scoop icon by Icons8 https://icons8.com/icon/36139/ice-cream-scoop<br>"
+                    + "Save icon by Icons8 https://icons8.com/icon/42847/save<br>"
+                    + "Save as icon by Icons8 https://icons8.com/icon/42946/save-as<br>"
+                    + "Import icon by Icons8 https://icons8.com/icon/46613/import<br>"
+                    + "<br><br></html>");
+        about.setHorizontalAlignment(JLabel.CENTER);
         about.setBackground(null);
         about.setBorder(null);
-        panel.add(about, BorderLayout.CENTER);
+        canvas.add(about, BorderLayout.PAGE_END);
 
-        UIManager.put("OptionPane.minimumSize",new Dimension(500, 500));        
-        JOptionPane.showMessageDialog(this, panel, "About", JOptionPane.PLAIN_MESSAGE);
+        UIManager.put("OptionPane.minimumSize",new Dimension(1000, 700));        
+        JOptionPane.showMessageDialog(this, canvas, "About", JOptionPane.PLAIN_MESSAGE);
     }
 
     public void onOpenClick() {
