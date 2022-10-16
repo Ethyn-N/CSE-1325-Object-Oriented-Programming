@@ -13,6 +13,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -116,6 +117,87 @@ public class MainWin extends JFrame {
 
         setJMenuBar(menubar);
         setVisible(true);
+
+        // ///////////// //////////////////////////////////////////////////////////
+        // T O O L B A R
+        // Add a toolbar to the PAGE_START region below the menu
+        JToolBar toolbar = new JToolBar("Ice Cream Controls");
+        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+        
+        JButton save  = new JButton(new ImageIcon(new ImageIcon("gui/save-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          save.setActionCommand("Save");
+          save.setToolTipText("Save ice cream flavors, mixins, and scoops");
+          save.setBorder(blackBorder);
+          toolbar.add(save);
+          save.addActionListener(event -> onSaveClick());
+        
+        // Create the 3 buttons using the icons provided
+        JButton saveAs  = new JButton(new ImageIcon(new ImageIcon("gui/save-as-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          saveAs.setActionCommand("Save As");
+          saveAs.setToolTipText("Save ice cream flavors, mixins, and scoops as file type");
+          saveAs.setBorder(blackBorder);
+          toolbar.add(saveAs);
+          saveAs.addActionListener(event -> onSaveAsClick());
+
+        JButton open = new JButton(new ImageIcon(new ImageIcon("gui/open-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          open.setActionCommand("Open");
+          open.setToolTipText("Open an ice cream file");
+          open.setBorder(blackBorder);
+          toolbar.add(open);
+          open.addActionListener(event -> onOpenClick());
+
+        toolbar.add(Box.createHorizontalStrut(25));
+
+        JButton createIceCreamFlavorButton = new JButton(new ImageIcon(new ImageIcon("gui/create-flavor-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          createIceCreamFlavorButton.setActionCommand("Create ice cream flavor");
+          createIceCreamFlavorButton.setToolTipText("Create an ice cream flavor");
+          createIceCreamFlavorButton.setBorder(blackBorder);
+          toolbar.add(createIceCreamFlavorButton);
+          createIceCreamFlavorButton.addActionListener(event -> onCreateIceCreamFlavorClick());
+
+        JButton createMixInFlavorButton = new JButton(new ImageIcon(new ImageIcon("gui/create-mixin-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          createMixInFlavorButton.setActionCommand("Create mixin flavor");
+          createMixInFlavorButton.setToolTipText("Create a mixin flavor");
+          createMixInFlavorButton.setBorder(blackBorder);
+          toolbar.add(createMixInFlavorButton);
+          createMixInFlavorButton.addActionListener(event -> onCreateMixInFlavorClick());
+
+        createScoopButton = new JButton(new ImageIcon(new ImageIcon("gui/create-scoop-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          createScoopButton.setActionCommand("Create scoop");
+          createScoopButton.setToolTipText("Create a scoop of ice cream");
+          createScoopButton.setBorder(blackBorder);
+          toolbar.add(createScoopButton);
+          createScoopButton.addActionListener(event -> onCreateScoopClick());
+
+          if (emporium.iceCreamFlavors().length == 0)
+            createScoopButton.setEnabled(false);
+          else
+            createScoopButton.setEnabled(true);
+
+        toolbar.add(Box.createHorizontalStrut(25));
+
+        JButton viewIceCreamFlavorButton = new JButton(new ImageIcon(new ImageIcon("gui/view-flavor-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          viewIceCreamFlavorButton.setActionCommand("View ice cream flavor");
+          viewIceCreamFlavorButton.setToolTipText("View ice cream flavors");
+          viewIceCreamFlavorButton.setBorder(blackBorder);
+          toolbar.add(viewIceCreamFlavorButton);
+          viewIceCreamFlavorButton.addActionListener(event -> view(Screen.ICE_CREAM_FLAVORS));
+
+        JButton viewMixInButton = new JButton(new ImageIcon(new ImageIcon("gui/view-mixin-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          viewMixInButton.setActionCommand("View mixin flavors");
+          viewMixInButton.setToolTipText("View mixin flavors");
+          viewMixInButton.setBorder(blackBorder);
+          toolbar.add(viewMixInButton);
+          viewMixInButton.addActionListener(event -> view(Screen.MIX_IN_FLAVORS));
+
+        JButton viewScoopsButton = new JButton(new ImageIcon(new ImageIcon("gui/view-scoop-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          viewScoopsButton.setActionCommand("View scoops");
+          viewScoopsButton.setToolTipText("View scoops");
+          viewScoopsButton.setBorder(blackBorder);
+          toolbar.add(viewScoopsButton);
+          viewScoopsButton.addActionListener(event -> view(Screen.SCOOPS));
+        
+        add(toolbar, BorderLayout.PAGE_START);
     }
 
     public void onQuitClick() {
@@ -153,6 +235,7 @@ public class MainWin extends JFrame {
                 IceCreamFlavor flavor = new IceCreamFlavor(names.getText(), descriptions.getText(), Integer.parseInt(costs.getText()), Integer.parseInt(prices.getText()));
                 emporium.addIceCreamFlavor(flavor);
                 createScoop.setEnabled(true);
+                createScoopButton.setEnabled(true);
                 view(Screen.ICE_CREAM_FLAVORS);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Please fill in all inputs with valid data", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -328,6 +411,18 @@ public class MainWin extends JFrame {
         JOptionPane.showMessageDialog(this, panel, "About", JOptionPane.PLAIN_MESSAGE);
     }
 
+    public void onOpenClick() {
+
+    }
+
+    public void onSaveClick() {
+
+    }
+
+    public void onSaveAsClick() {
+
+    }
+
     private void view(Screen screen) {
         if (screen == Screen.ICE_CREAM_FLAVORS)
             display.setText("Ice Cream Flavors: " + Arrays.toString(emporium.iceCreamFlavors()));
@@ -357,5 +452,7 @@ public class MainWin extends JFrame {
 
     private Emporium emporium = new Emporium();
     private JLabel display;
+    private File filename;
     private JMenuItem createScoop;
+    private JButton createScoopButton;
 }
