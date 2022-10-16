@@ -19,18 +19,31 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
+
 import javax.swing.border.Border;
+
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
@@ -131,7 +144,6 @@ public class MainWin extends JFrame {
           toolbar.add(save);
           save.addActionListener(event -> onSaveClick());
         
-        // Create the 3 buttons using the icons provided
         JButton saveAs  = new JButton(new ImageIcon(new ImageIcon("gui/save-as-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
           saveAs.setActionCommand("Save As");
           saveAs.setToolTipText("Save ice cream flavors, mixins, and scoops as file type");
@@ -412,15 +424,54 @@ public class MainWin extends JFrame {
     }
 
     public void onOpenClick() {
-
+        final JFileChooser fc = new JFileChooser(filename);  // Create a file chooser dialog
+        FileFilter miceFiles = new FileNameExtensionFilter("Mice files", "mice");
+        fc.addChoosableFileFilter(miceFiles);         // Add "Mice file" filter
+        fc.setFileFilter(miceFiles);                  // Show Mice files only by default
+        
+        int result = fc.showOpenDialog(this);        // Run dialog, return button clicked
+        if (result == JFileChooser.APPROVE_OPTION) { // Also CANCEL_OPTION and ERROR_OPTION
+            filename = fc.getSelectedFile();        // Obtain the selected File object
+            
+            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+                String magicCookie = br.readLine();
+                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a mice file");
+                String fileVersion = br.readLine();
+                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mice file format");
+                
+                emporium = new Emporium(br);                   // Open a new game
+                view(Screen.SCOOPS);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
+                    "Failed", JOptionPane.ERROR_MESSAGE); 
+             }
+        }
     }
 
     public void onSaveClick() {
-
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            bw.write(MAGIC_COOKIE + '\n');
+            bw.write(FILE_VERSION + '\n');
+            emporium.save(bw);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
+                "Failed", JOptionPane.ERROR_MESSAGE); 
+        }
     }
 
     public void onSaveAsClick() {
-
+        final JFileChooser fc = new JFileChooser(filename);   // Create a file chooser dialog
+        FileFilter miceFiles = new FileNameExtensionFilter("mice files", "mice");
+        fc.addChoosableFileFilter(miceFiles);                  // Add "mice file" filter
+        fc.setFileFilter(miceFiles);                           // Show only mice files by default
+        
+        int result = fc.showSaveDialog(this);                 // Run dialog, return button clicked
+        if (result == JFileChooser.APPROVE_OPTION) {          // Also CANCEL_OPTION and ERROR_OPTION
+            filename = fc.getSelectedFile();                  // Obtain the selected File object
+            if(!filename.getAbsolutePath().endsWith(".mice"))  // Ensure it ends with ".mice"
+                filename = new File(filename.getAbsolutePath() + ".mice");
+            onSaveClick();                                // Delegate to Save method
+        }
     }
 
     private void view(Screen screen) {
@@ -452,7 +503,12 @@ public class MainWin extends JFrame {
 
     private Emporium emporium = new Emporium();
     private JLabel display;
-    private File filename;
+    private File filename = new File("untitled.mice");
     private JMenuItem createScoop;
     private JButton createScoopButton;
+    
+    private String NAME = "Mice";
+    private String VERSION = "1.4J";
+    private String FILE_VERSION = "1.0";
+    private String MAGIC_COOKIE = "🍦";
 }
