@@ -425,7 +425,7 @@ public class MainWin extends JFrame {
 
         JLabel about = new JLabel();
         about.setText("<html><body style=\"font-family: Verdana \"<b><br>" 
-                    + "Version 0.2<br>"
+                    + "Version 0.3<br>"
                     + "Copyright 2022 by Ethyn Nguyen<br>"
                     + "Licensed under GNU GPL 3.0<br>"
                     + "Logo by Schmidsi, per the Pixabay License<br>"
@@ -462,7 +462,7 @@ public class MainWin extends JFrame {
                 String fileVersion = br.readLine();
                 if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mice file format");
                 
-                emporium = new Emporium(br);                   // Open a new game
+                emporium = new Emporium(br);                   // Open a new emorium
                 view(Screen.SCOOPS);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
@@ -531,7 +531,7 @@ public class MainWin extends JFrame {
     private JButton createScoopButton;
     
     private String NAME = "Mice";
-    private String VERSION = "1.4J";
+    private String VERSION = "1.0";
     private String FILE_VERSION = "1.0";
     private String MAGIC_COOKIE = "🍦";
 }
