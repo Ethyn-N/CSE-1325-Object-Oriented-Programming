@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include  <algorithm>
+#include <algorithm>
 
 int main(int argc, char* argv[]) {
     std::vector<std::string> v;
