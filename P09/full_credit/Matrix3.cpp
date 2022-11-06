@@ -39,12 +39,11 @@ Matrix3 Matrix3::operator+(Matrix3 rhs) {
 
 std::ostream& operator<<(std::ostream& out, Matrix3& m) {
     for (int i = 0; i < 3; i++) {
-        out << "\n";
         for (int j = 0; j < 3; j++) {
                 out << std::setw(4) << m.data[i][j] << " ";
         } 
+        out << "\n";
     }
-    out << "\n";
     return out;
 }
 
