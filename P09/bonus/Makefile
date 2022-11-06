@@ -1,6 +1,6 @@
 CXXFLAGS = --std=c++17
 
-all: matrix_generator simple_matrix3_test test_matrix3 test_matrix3 interactive_matrix3 read_add_save
+all: test_matrix3 interactive_test read_add_save
 
 # Linkers
 test_matrix3: test_matrix3.o Matrix3.o *.h
