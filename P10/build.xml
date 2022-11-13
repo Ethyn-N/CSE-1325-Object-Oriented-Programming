@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="P05" default="build">
+<project name="MICE" default="build">
   <presetdef name="javac">
     <javac includeantruntime="false" />
   </presetdef>
