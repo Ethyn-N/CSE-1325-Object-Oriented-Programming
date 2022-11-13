@@ -5,7 +5,8 @@ import product.IceCreamFlavor;
 import product.MixInFlavor;
 import product.MixInAmount;
 import product.MixIn;
-import product.Scoop;
+import product.Container;
+import product.Order;
 import product.Item;
 
 import java.io.BufferedWriter;
@@ -28,10 +29,16 @@ public class Emporium {
             mixInFlavors.add(new MixInFlavor(in));
         }
 
-        int scoopSize = Integer.parseInt(in.readLine());
+        int containerSize = Integer.parseInt(in.readLine());
 
-        for(int i = 0; i < scoopSize; i++) {
-            scoops.add(new Scoop(in));
+        for(int i = 0; i < containerSize; i++) {
+            containers.add(new Container(in));
+        }
+
+        int orderSize = Integer.parseInt(in.readLine());
+
+        for(int i = 0; i < orderSize; i++) {
+            orders.add(new Order(in));
         }
     }
 
@@ -48,10 +55,16 @@ public class Emporium {
             mixInFlavor.save(out);
         }
 
-        out.write(scoops.size() + "\n");
+        out.write(containers.size() + "\n");
 
-        for(Scoop scoop : scoops) {
-            scoop.save(out);
+        for(Container container : containers) {
+            container.save(out);
+        }
+
+        out.write(orders.size() + "\n");
+
+        for(Order order : orders) {
+            order.save(out);
         }
     }
 
@@ -63,8 +76,12 @@ public class Emporium {
         iceCreamFlavors.add(flavor);
     }
 
-    public void addScoop(Scoop scoop) {
-        scoops.add(scoop);
+    public void addContainer(Container container) {
+        containers.add(container);
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 
     public Object[] mixInFlavors() {
@@ -75,11 +92,16 @@ public class Emporium {
         return iceCreamFlavors.toArray();
     }
 
-    public Object[] scoops() {
-        return scoops.toArray();
+    public Object[] containers() {
+        return containers.toArray();
+    }
+
+    public Object[] orders() {
+        return orders.toArray();
     }
 
     private ArrayList<IceCreamFlavor> iceCreamFlavors = new ArrayList<>();
     private ArrayList<MixInFlavor> mixInFlavors = new ArrayList<>();
-    private ArrayList<Scoop> scoops = new ArrayList<>();
+    private ArrayList<Container> containers = new ArrayList<>();
+    private ArrayList<Order> orders = new ArrayList<>();
 }
