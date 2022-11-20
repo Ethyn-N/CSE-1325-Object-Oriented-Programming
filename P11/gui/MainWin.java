@@ -548,8 +548,32 @@ public class MainWin extends JFrame {
         return new MixIn(mixInFlavor, mixInAmount);
     }
 
-    public Serving onCreateServing() {
+    public Serving onCreateServing(Customer customer) {
         UIManager.put("OptionPane.minimumSize", new Dimension(250, 100));
+
+        JLabel question = new JLabel("<HTML><br/>Would you like to choose a favorite serving?</HTML>");
+
+        Object[] favoriteServings = emporium.favoriteServings(customer);
+
+        JComboBox<Object> fs = new JComboBox<>(favoriteServings);
+
+        Object[] objects = {  // Array of widgets to display
+            question, fs};
+
+        if (favoriteServings.length != 0) {
+            int option = JOptionPane.showConfirmDialog( // Show the dialog
+                this,
+                objects,
+                "Choose favorite Serving",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+            if (option == JOptionPane.YES_OPTION)
+                return (Serving)fs.getSelectedItem();
+            if (option == JOptionPane.CANCEL_OPTION)
+                return null;
+        }
+
         Container container = (Container)JOptionPane.showInputDialog(
             this,
             "What container would you like?",
@@ -601,11 +625,27 @@ public class MainWin extends JFrame {
     }
 
     public void onCreateOrderClick() {
+        UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
         Order order = new Order();
         boolean isOrder = false;
 
+        Customer customer = (Customer)JOptionPane.showInputDialog(
+            this,
+            "Who is the customer?",
+            "Choose customer",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            emporium.customers(),
+            null);
+
+        if (customer == null) {
+            return;
+        }
+
+        order.setCustomer(customer);
+
         while (true) {
-            Serving serving = onCreateServing();
+            Serving serving = onCreateServing(customer);
             if (serving != null) {
                 order.addServing(serving);
                 isOrder = true;
@@ -746,7 +786,7 @@ public class MainWin extends JFrame {
                 title = "Orders";
                 int i = 1;
                 for(var t : emporium.orders()) {
-                    s.append("Order " + i + "<br/>" + t.toString());
+                    s.append("Order " + i + " " + t.toString());
                     i++;
                 } 
                 break;
