@@ -127,7 +127,7 @@ public class MainWin extends JFrame {
         create.add(createMixInFlavor);
         create.add(createOrder);
         
-        if (emporium.iceCreamFlavors().length == 0 || emporium.containers().length == 0)
+        if (emporium.iceCreamFlavors().length == 0 || emporium.containers().length == 0 || emporium.customers().length == 0)
             createOrder.setEnabled(false);
         else
             createOrder.setEnabled(true);
@@ -217,7 +217,7 @@ public class MainWin extends JFrame {
           toolbar.add(createOrderButton);
           createOrderButton.addActionListener(event -> onCreateOrderClick());
 
-          if (emporium.iceCreamFlavors().length == 0 || emporium.containers().length == 0)
+          if (emporium.iceCreamFlavors().length == 0 || emporium.containers().length == 0 || emporium.customers().length == 0)
             createOrderButton.setEnabled(false);
           else
             createOrderButton.setEnabled(true);
@@ -225,8 +225,8 @@ public class MainWin extends JFrame {
         toolbar.add(Box.createHorizontalStrut(25));
 
         JButton viewCustomerButton = new JButton(new ImageIcon(new ImageIcon("gui/view-customer-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
-          viewCustomerButton.setActionCommand("View ice cream containers");
-          viewCustomerButton.setToolTipText("View ice cream containers");
+          viewCustomerButton.setActionCommand("View customers");
+          viewCustomerButton.setToolTipText("View customers");
           viewCustomerButton.setBorder(blackBorder);
           toolbar.add(viewCustomerButton);
           viewCustomerButton.addActionListener(event -> view(Screen.CUSTOMERS));
@@ -291,6 +291,10 @@ public class MainWin extends JFrame {
                     throw new IllegalArgumentException();
                 Customer customer = new Customer(names.getText(), phones.getText());
                 emporium.addCustomer(customer);
+                if (emporium.iceCreamFlavors().length > 0 && emporium.containers().length > 0) {
+                    createOrder.setEnabled(true);
+                    createOrderButton.setEnabled(true);
+                }
                 view(Screen.CUSTOMERS);
             } 
             catch (Exception e) {
@@ -331,7 +335,7 @@ public class MainWin extends JFrame {
                 }
                 Container container = new Container(names.getText(), descriptions.getText(), Integer.parseInt(maxScoops.getText()));
                 emporium.addContainer(container);
-                if (emporium.iceCreamFlavors().length > 0) {
+                if (emporium.iceCreamFlavors().length > 0 && emporium.customers().length > 0) {
                     createOrder.setEnabled(true);
                     createOrderButton.setEnabled(true);
                 }
@@ -381,7 +385,7 @@ public class MainWin extends JFrame {
                     throw new IllegalArgumentException();
                 IceCreamFlavor flavor = new IceCreamFlavor(names.getText(), descriptions.getText(), Double.parseDouble(costs.getText()), Double.parseDouble(prices.getText()));
                 emporium.addIceCreamFlavor(flavor);
-                if (emporium.containers().length > 0) {
+                if (emporium.containers().length > 0 && emporium.customers().length > 0) {
                     createOrder.setEnabled(true);
                     createOrderButton.setEnabled(true);
                 }
@@ -626,8 +630,7 @@ public class MainWin extends JFrame {
 
     public void onCreateOrderClick() {
         UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
-        Order order = new Order();
-        boolean isOrder = false;
+        
 
         Customer customer = (Customer)JOptionPane.showInputDialog(
             this,
@@ -642,7 +645,8 @@ public class MainWin extends JFrame {
             return;
         }
 
-        order.setCustomer(customer);
+        Order order = new Order(customer);
+        boolean isOrder = false;
 
         while (true) {
             Serving serving = onCreateServing(customer);
