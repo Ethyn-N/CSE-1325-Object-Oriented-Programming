@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Item {
-    public Item(String name, String description, int cost, int price) {
+    public Item(String name, String description, double cost, double price) {
         this.name = name;
         this.description = description;
         this.cost = cost;
@@ -15,8 +15,8 @@ public class Item {
     public Item(BufferedReader in) throws IOException {
         name = in.readLine();
         description = in.readLine();
-        cost = Integer.parseInt(in.readLine());
-        price = Integer.parseInt(in.readLine());
+        cost = Double.parseDouble(in.readLine());
+        price = Double.parseDouble(in.readLine());
     }
 
     public void save(BufferedWriter out) throws IOException {
@@ -34,11 +34,11 @@ public class Item {
         return description;
     }
 
-    public int price() {
+    public double price() {
         return price;
     }
 
-    public int cost() {
+    public double cost() {
         return cost;
     }
 
@@ -49,6 +49,6 @@ public class Item {
 
     private String name;
     private String description;
-    private int cost;
-    private int price;
+    private double cost;
+    private double price;
 }

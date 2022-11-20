@@ -15,14 +15,29 @@ public class MixIn {
 
         String name = in.readLine();
         String description = in.readLine();
-        int cost = Integer.parseInt(in.readLine());
-        int price = Integer.parseInt(in.readLine());
+        double cost = Integer.parseInt(in.readLine());
+        double price = Integer.parseInt(in.readLine());
         flavor = new MixInFlavor(name, description, cost, price);
     }
 
     public void save(BufferedWriter out) throws IOException {
         out.write(amount.toString() + "\n");
         flavor.save(out);
+    }
+
+    public double price() {
+        switch(amount) {
+            case Light:
+                return (flavor.price() * 0.8);
+            case Normal:
+                return flavor.price();
+            case Extra:
+                return (flavor.price() * 1.2);
+            case Drenched:
+                return (flavor.price() * 2);
+            default:
+                return 0;
+        }
     }
 
     @Override

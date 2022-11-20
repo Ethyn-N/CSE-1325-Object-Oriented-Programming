@@ -28,6 +28,15 @@ public class Order {
         servings.add(serving);
     }
 
+    public double price() {
+        double sum = 0;
+
+        for (Serving s : servings)
+            sum += s.price();
+
+        return sum;
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

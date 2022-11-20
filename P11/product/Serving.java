@@ -53,6 +53,22 @@ public class Serving {
         this.topping.add(topping);
     }
 
+    public int numScoops() {
+        return scoop.size();
+    }
+
+    public double price() {
+        double sum = 0;
+
+        for (Scoop s : scoop)
+            sum += s.price();
+
+        for (MixIn t : topping)
+            sum += t.price();
+        
+        return sum;
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -74,7 +90,6 @@ public class Serving {
         }
 
         
-
         if(scoop.size() <= 1)
             s.append(container + " with a scoop of " + scoops);
         else

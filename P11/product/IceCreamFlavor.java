@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class IceCreamFlavor extends Item {
-    public IceCreamFlavor(String name, String description, int cost, int price) {
+    public IceCreamFlavor(String name, String description, double cost, double price) {
         super(name, description, cost, price);
     }
 

@@ -13,8 +13,8 @@ public class Scoop {
     public Scoop(BufferedReader in) throws IOException {
         String name = in.readLine();
         String description = in.readLine();
-        int cost = Integer.parseInt(in.readLine());
-        int price = Integer.parseInt(in.readLine());
+        double cost = Double.parseDouble(in.readLine());
+        double price = Double.parseDouble(in.readLine());
         flavor = new IceCreamFlavor(name, description, cost, price);
 
         int size = Integer.parseInt(in.readLine());
@@ -36,6 +36,15 @@ public class Scoop {
 
     public void addMixIn(MixIn mixIn) {
         mixins.add(mixIn);
+    }
+
+    public double price() {
+        double sum = flavor.price();
+
+        for (MixIn mixIn : mixins)
+            sum += mixIn.price();
+
+        return sum;
     }
 
     @Override
