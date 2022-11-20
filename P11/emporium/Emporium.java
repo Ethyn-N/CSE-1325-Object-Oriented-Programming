@@ -1,5 +1,6 @@
 package emporium;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import product.IceCreamFlavor;
 import product.MixInFlavor;
@@ -43,6 +44,13 @@ public class Emporium {
         for(int i = 0; i < orderSize; i++) {
             orders.add(new Order(in));
         }
+
+        int customerSize = Integer.parseInt(in.readLine());
+
+        for(int i = 0; i < customerSize; i++) {
+            customers.add(new Customer(in));
+        }
+
     }
 
     public void save(BufferedWriter out) throws IOException {
@@ -69,6 +77,13 @@ public class Emporium {
         for(Order order : orders) {
             order.save(out);
         }
+
+        out.write(customers.size() + "\n");
+
+        for(Customer customer : customers) {
+            customer.save(out);
+        }
+
     }
 
     public void addCustomer(Customer customer) {
