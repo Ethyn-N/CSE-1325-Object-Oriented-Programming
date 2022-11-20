@@ -8,6 +8,8 @@ import product.MixIn;
 import product.Container;
 import product.Order;
 import product.Item;
+import person.Person;
+import person.Customer;
 
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -68,6 +70,10 @@ public class Emporium {
         }
     }
 
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
     public void addMixInFlavor(MixInFlavor flavor) {
         mixInFlavors.add(flavor);
     }
@@ -82,6 +88,10 @@ public class Emporium {
 
     public void addOrder(Order order) {
         orders.add(order);
+    }
+
+    public Object[] customers() {
+        return customers.toArray();
     }
 
     public Object[] mixInFlavors() {
@@ -104,4 +114,5 @@ public class Emporium {
     private ArrayList<MixInFlavor> mixInFlavors = new ArrayList<>();
     private ArrayList<Container> containers = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<Customer> customers = new ArrayList<>();
 }
