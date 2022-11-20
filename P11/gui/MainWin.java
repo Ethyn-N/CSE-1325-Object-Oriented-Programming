@@ -10,6 +10,8 @@ import product.Item;
 import product.Container;
 import product.Order;
 import product.Serving;
+import person.Person;
+import person.Customer;
 
 import gui.Canvas;
 
@@ -60,7 +62,7 @@ public class MainWin extends JFrame {
     public MainWin(String title) {
         super(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(1100, 600);
 
         // GridBagLayout layout = new GridBagLayout();
         // layout.columnWidths = new int[] 
@@ -79,12 +81,14 @@ public class MainWin extends JFrame {
         JMenuItem quit                  = new JMenuItem("Quit");
 
         JMenu     view                  = new JMenu("View");
+        JMenuItem viewCustomer          = new JMenuItem("Customer");
+        JMenuItem viewContainer         = new JMenuItem("Container");
         JMenuItem viewIceCreamFlavor    = new JMenuItem("Ice Cream Flavor");
         JMenuItem viewMixInFlavor       = new JMenuItem("Mix In Flavor");
         JMenuItem viewOrder             = new JMenuItem("Order");
-        JMenuItem viewContainer         = new JMenuItem("Container");
 
         JMenu     create                = new JMenu("Create");
+        JMenuItem createCustomer        = new JMenuItem("Customer");
         JMenuItem createContainer       = new JMenuItem("Container");
         JMenuItem createIceCreamFlavor  = new JMenuItem("Ice Cream Flavor");
         JMenuItem createMixInFlavor     = new JMenuItem("Mix In Flavor");
@@ -95,11 +99,13 @@ public class MainWin extends JFrame {
 
         quit                    .addActionListener(event -> onQuitClick());
 
+        viewCustomer            .addActionListener(event -> view(Screen.CUSTOMERS));
+        viewContainer           .addActionListener(event -> view(Screen.CONTAINERS));
         viewIceCreamFlavor      .addActionListener(event -> view(Screen.ICE_CREAM_FLAVORS));
         viewMixInFlavor         .addActionListener(event -> view(Screen.MIX_IN_FLAVORS));
         viewOrder               .addActionListener(event -> view(Screen.ORDERS));
-        viewContainer           .addActionListener(event -> view(Screen.CONTAINERS));
-
+        
+        createContainer         .addActionListener(event -> onCreateCustomerClick());
         createContainer         .addActionListener(event -> onCreateContainerClick());
         createIceCreamFlavor    .addActionListener(event -> onCreateIceCreamFlavorClick());
         createMixInFlavor       .addActionListener(event -> onCreateMixInFlavorClick());
@@ -109,11 +115,13 @@ public class MainWin extends JFrame {
 
         file.add(quit);
         
+        view.add(viewCustomer);
         view.add(viewContainer);
         view.add(viewIceCreamFlavor);
         view.add(viewMixInFlavor);
         view.add(viewOrder);
         
+        create.add(createCustomer);
         create.add(createContainer);
         create.add(createIceCreamFlavor);
         create.add(createMixInFlavor);
@@ -174,6 +182,13 @@ public class MainWin extends JFrame {
 
         toolbar.add(Box.createHorizontalStrut(25));
 
+        JButton createCustomerButton = new JButton(new ImageIcon(new ImageIcon("gui/create-customer-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          createCustomerButton.setActionCommand("Create a customer");
+          createCustomerButton.setToolTipText("Create a customer");
+          createCustomerButton.setBorder(blackBorder);
+          toolbar.add(createCustomerButton);
+          createCustomerButton.addActionListener(event -> onCreateCustomerClick());
+
         JButton createContainerButton = new JButton(new ImageIcon(new ImageIcon("gui/create-container-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
           createContainerButton.setActionCommand("Create an ice cream container");
           createContainerButton.setToolTipText("Create an ice cream container");
@@ -208,6 +223,13 @@ public class MainWin extends JFrame {
             createOrderButton.setEnabled(true);
 
         toolbar.add(Box.createHorizontalStrut(25));
+
+        JButton viewCustomerButton = new JButton(new ImageIcon(new ImageIcon("gui/view-customer-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+          viewCustomerButton.setActionCommand("View ice cream containers");
+          viewCustomerButton.setToolTipText("View ice cream containers");
+          viewCustomerButton.setBorder(blackBorder);
+          toolbar.add(viewCustomerButton);
+          viewCustomerButton.addActionListener(event -> view(Screen.CUSTOMERS));
 
         JButton viewContainerButton = new JButton(new ImageIcon(new ImageIcon("gui/view-container-icon.png").getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
           viewContainerButton.setActionCommand("View ice cream containers");
@@ -244,8 +266,42 @@ public class MainWin extends JFrame {
         System.exit(0);
     }
 
+    public void onCreateCustomerClick() {
+        UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
+        JLabel name = new JLabel("<HTML><br/>Name</HTML>");
+        JTextField names = new JTextField(20);
+
+        JLabel phone = new JLabel("<HTML><br/>Phone</HTML>");
+        JTextField phones = new JTextField(20); 
+
+        Object[] objects = {  // Array of widgets to display
+            name,   names, 
+            phone,   phones};
+        
+        int option = JOptionPane.showConfirmDialog( // Show the dialog
+            this,
+            objects,
+            "New Customer",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.OK_OPTION) {
+            try {
+                if (names.getText().isEmpty() || phones.getText().isEmpty())
+                    throw new IllegalArgumentException();
+                Customer customer = new Customer(names.getText(), phones.getText());
+                emporium.addCustomer(customer);
+                view(Screen.CUSTOMERS);
+            } 
+            catch (Exception e) {
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
+                JOptionPane.showMessageDialog(this, "Please fill in all inputs with valid data", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     public void onCreateContainerClick() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(250, 300));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 300));
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
         JTextField names = new JTextField(20);
 
@@ -270,7 +326,7 @@ public class MainWin extends JFrame {
         if (option == JOptionPane.OK_OPTION) {
             try {
                 if (Integer.parseInt(maxScoops.getText()) <= 0) {
-                    UIManager.put("OptionPane.minimumSize",new Dimension(50, 50));
+                    UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                     throw new IllegalArgumentException("Please use a number that is greater than 0 for max scoops");
                 }
                 Container container = new Container(names.getText(), descriptions.getText(), Integer.parseInt(maxScoops.getText()));
@@ -282,18 +338,18 @@ public class MainWin extends JFrame {
                 view(Screen.CONTAINERS);
             } 
             catch (NumberFormatException e) {
-                UIManager.put("OptionPane.minimumSize",new Dimension(50, 50));
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                 JOptionPane.showMessageDialog(this, "Please fill in all inputs with valid data", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             catch (IllegalArgumentException e) {
-                UIManager.put("OptionPane.minimumSize",new Dimension(50, 50));
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                 JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     public void onCreateIceCreamFlavorClick() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(250, 300));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 300));
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
         JTextField names = new JTextField(20);
 
@@ -321,7 +377,9 @@ public class MainWin extends JFrame {
 
         if (option == JOptionPane.OK_OPTION) {
             try {
-                IceCreamFlavor flavor = new IceCreamFlavor(names.getText(), descriptions.getText(), Integer.parseInt(costs.getText()), Integer.parseInt(prices.getText()));
+                if (Double.parseDouble(costs.getText()) < 0 || Double.parseDouble(prices.getText()) < 0)
+                    throw new IllegalArgumentException();
+                IceCreamFlavor flavor = new IceCreamFlavor(names.getText(), descriptions.getText(), Double.parseDouble(costs.getText()), Double.parseDouble(prices.getText()));
                 emporium.addIceCreamFlavor(flavor);
                 if (emporium.containers().length > 0) {
                     createOrder.setEnabled(true);
@@ -329,14 +387,14 @@ public class MainWin extends JFrame {
                 }
                 view(Screen.ICE_CREAM_FLAVORS);
             } catch (Exception e) {
-                UIManager.put("OptionPane.minimumSize",new Dimension(50, 50));
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                 JOptionPane.showMessageDialog(this, "Please fill in all inputs with valid data", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     public void onCreateMixInFlavorClick() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(250, 300));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 300));
         JLabel name = new JLabel("<HTML><br/>Name</HTML>");
         JTextField names = new JTextField(20);
 
@@ -364,18 +422,20 @@ public class MainWin extends JFrame {
 
         if (option == JOptionPane.OK_OPTION) {
             try {
-                MixInFlavor flavor = new MixInFlavor(names.getText(), descriptions.getText(), Integer.parseInt(costs.getText()), Integer.parseInt(prices.getText()));
+                if (Double.parseDouble(costs.getText()) < 0 || Double.parseDouble(prices.getText()) < 0)
+                    throw new IllegalArgumentException();
+                MixInFlavor flavor = new MixInFlavor(names.getText(), descriptions.getText(), Double.parseDouble(costs.getText()), Double.parseDouble(prices.getText()));
                 emporium.addMixInFlavor(flavor);
                 view(Screen.MIX_IN_FLAVORS);
             } catch (Exception e) {
-                UIManager.put("OptionPane.minimumSize",new Dimension(50, 50));
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                 JOptionPane.showMessageDialog(this, "Please fill in all inputs with valid data", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     public Scoop onCreateScoop() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(250, 100));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 100));
         IceCreamFlavor flavor = (IceCreamFlavor)JOptionPane.showInputDialog(
             this,
             "Would you like to add a scoop of ice cream?",
@@ -489,7 +549,7 @@ public class MainWin extends JFrame {
     }
 
     public Serving onCreateServing() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(250, 100));
+        UIManager.put("OptionPane.minimumSize", new Dimension(250, 100));
         Container container = (Container)JOptionPane.showInputDialog(
             this,
             "What container would you like?",
@@ -564,11 +624,8 @@ public class MainWin extends JFrame {
 
     public void onAboutClick() {
         BorderLayout borderLayout = new BorderLayout();
-        //borderLayout.setVgap(20);
-        //borderLayout.setHgap(5);
         Border border = BorderFactory.createLineBorder(Color.ORANGE);
         Canvas canvas = new Canvas();
-        //JPanel panel = new JPanel();
         canvas.setBackground(new Color(102, 205, 170));
         canvas.setLayout(borderLayout);
         canvas.setBorder(border);
@@ -582,7 +639,7 @@ public class MainWin extends JFrame {
 
         JLabel about = new JLabel();
         about.setText("<html><body style=\"font-family: Verdana \"<b><br>" 
-                    + "Version 0.4<br>"
+                    + "Version 1.0<br>"
                     + "Copyright 2022 by Ethyn Nguyen<br>"
                     + "Licensed under GNU GPL 3.0<br>"
                     + "Logo by Schmidsi, per the Pixabay License<br>"
@@ -593,13 +650,14 @@ public class MainWin extends JFrame {
                     + "Save icon by Icons8 https://icons8.com/icon/42847/save<br>"
                     + "Save as icon by Icons8 https://icons8.com/icon/42946/save-as<br>"
                     + "Import icon by Icons8 https://icons8.com/icon/46613/import<br>"
+                    + "Girl and ice cream icon by Icons8 https://icons8.com/icon/82181/girl-and-ice-cream<br>"
                     + "<br><br></html>");
         about.setHorizontalAlignment(JLabel.CENTER);
         about.setBackground(null);
         about.setBorder(null);
         canvas.add(about, BorderLayout.PAGE_END);
 
-        UIManager.put("OptionPane.minimumSize",new Dimension(1000, 700));        
+        UIManager.put("OptionPane.minimumSize", new Dimension(1000, 700));        
         JOptionPane.showMessageDialog(this, canvas, "About", JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -668,6 +726,10 @@ public class MainWin extends JFrame {
         String title = "";
         StringBuilder s = new StringBuilder();
         switch(screen) {
+            case CUSTOMERS:
+                title = "Customers";
+                for(var t : emporium.customers()) s.append(t.toString() + "<br/>");
+                break;
             case CONTAINERS:
                 title = "Containers";
                 for(var t : emporium.containers()) s.append(t.toString() + "<br/>");
@@ -695,6 +757,7 @@ public class MainWin extends JFrame {
     }
 
     public enum Screen {
+        CUSTOMERS,
         CONTAINERS,
         ICE_CREAM_FLAVORS,
         MIX_IN_FLAVORS,
