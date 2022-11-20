@@ -9,9 +9,13 @@ import java.text.DecimalFormat;
 import person.Customer;
 
 public class Order {
-    public Order() {}
+    public Order(Customer customer) {
+        this.customer = customer;
+    }
 
     public Order(BufferedReader in) throws IOException {
+        customer = new Customer(in);
+
         int size = Integer.parseInt(in.readLine());
 
         for(int i = 0; i < size; i++) {
@@ -20,6 +24,8 @@ public class Order {
     }
 
     public void save(BufferedWriter out) throws IOException {
+        customer.save(out);
+
         out.write(servings.size() + "\n");
 
         for(Serving serving : servings) {
