@@ -8,6 +8,7 @@ import product.MixIn;
 import product.Container;
 import product.Order;
 import product.Item;
+import product.Serving;
 import person.Person;
 import person.Customer;
 
@@ -88,6 +89,10 @@ public class Emporium {
 
     public void addOrder(Order order) {
         orders.add(order);
+
+        for(var serving : order.servings())
+            favoriteServings.put(order.getCustomer(), (Serving)serving);
+
     }
 
     public Object[] customers() {
@@ -110,9 +115,14 @@ public class Emporium {
         return orders.toArray();
     }
 
+    public Object[] favoriteServings(Customer customer) {
+        return favoriteServings.get(customer);
+    }
+
     private ArrayList<IceCreamFlavor> iceCreamFlavors = new ArrayList<>();
     private ArrayList<MixInFlavor> mixInFlavors = new ArrayList<>();
     private ArrayList<Container> containers = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
+    private MultiMap<Customer, Serving> favoriteServings = new MultiMap<>();
 }
