@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+
+import person.Customer;
 
 public class Order {
     public Order() {}
@@ -24,8 +27,20 @@ public class Order {
         }
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public void addServing(Serving serving) {
         servings.add(serving);
+    }
+
+    public Object[] servings() {
+        return servings.toArray();
     }
 
     public double price() {
@@ -40,11 +55,19 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for(var t : servings) {
+        DecimalFormat df = new DecimalFormat( "#.00" );
+        double sum = 0;
+        for(var t : servings)
+             sum += t.price();
+        
+        s.append("$" + df.format(sum) + " for ");
+        s.append(customer.toString() + ":" + "<br/>");
+        for(var t : servings)
              s.append(t.toString() + "<br/>");
-        }
+
         return s.toString(); 
     }
 
+    private Customer customer;
     private ArrayList<Serving> servings = new ArrayList<>();
 }
