@@ -31,17 +31,26 @@ public class Person {
         if (rhs == null) return false;
         if (this.getClass() != rhs.getClass()) return false;
         Person person = (Person) rhs;
+
+        if (name == null)
+            if (person.name != null)
+                return false;
+
+        if (phone == null)
+            if (person.phone != null)
+                return false;
         
-        if (name.equals(person.name) == false || phone.equals(person.phone) == false)
+        if (!name.equals(person.name) || !phone.equals(person.phone))
             return false;
-        else
-            return true;
+        
+        return true;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31*hash + (phone == null ? 0 : phone.hashCode());
+        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (phone == null ? 0 : phone.hashCode());
         return hash;
     }
 
