@@ -826,7 +826,7 @@ public class MainWin extends JFrame {
     private JButton createOrderButton;
     
     private String NAME = "Mice";
-    private String VERSION = "0.4";
-    private String FILE_VERSION = "0.4";
+    private String VERSION = "1.0";
+    private String FILE_VERSION = "1.0";
     private String MAGIC_COOKIE = "🍦";
 }
