@@ -695,7 +695,7 @@ public class MainWin extends JFrame {
                     + "Save as icon by Icons8 https://icons8.com/icon/42946/save-as<br>"
                     + "Import icon by Icons8 https://icons8.com/icon/46613/import<br>"
                     + "Girl and ice cream icon by Icons8 https://icons8.com/icon/82181/girl-and-ice-cream<br>"
-                    + "<br><br></html>");
+                    + "<br></html>");
         about.setHorizontalAlignment(JLabel.CENTER);
         about.setBackground(null);
         about.setBorder(null);
@@ -734,6 +734,7 @@ public class MainWin extends JFrame {
 
                 view(Screen.ORDERS);
             } catch (Exception e) {
+                UIManager.put("OptionPane.minimumSize", new Dimension(50, 50));
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
                     "Failed", JOptionPane.ERROR_MESSAGE); 
              }
