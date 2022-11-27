@@ -48,7 +48,6 @@ public class Polynomial {
             }
         }
 
-        //solveRecursive(min, max, 1, slices, precision, 0);
     }
     public Object[] roots() {
         return roots.toArray();
