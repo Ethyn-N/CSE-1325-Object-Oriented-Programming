@@ -1,0 +1,252 @@
+====================
+HOMEWORK P12 RESULTS
+====================
+
+Fall 2022
+
+
+FULL CREDIT
+===========
+
+NOTE: These are measurements which may vary plus your opinions which may vary a LOT. We won't grade for "correctness", just completeness.
+
+QUESTION 1: What Solver command line arguments did you use to achieve a 30 to 45 second runtime? Note: We're only interested in the "real" seconds for this question.
+
+threads = 1: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6, file.poly = poly2a.poly
+
+
+
+
+
+QUESTION 2: Provide the full output (including the time command) for your program, with 1 to 16 threads. **Ensure that the result is the same for all 16 runs.** (The root found may vary in the least significant digits.) With bash, you can run all of these with a single command if you like, adding whatever Solver command line arguments you identified in QUESTION 1: 
+
+for i in {1..16} ; do time java Solver --threads $i poly4.poly ; done
+
+
+
+student@maverick:/media/sf_Virtual_Machine/cse1325/P12/full_credit$ for i in {1..16} ; do time java Solver --threads $i --slices 1700000000 --min -1000000000 --max 1000000000 polys/poly2a.poly ; done
+Loading polys/poly2a.poly... done
+
+threads = 1: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182799317720137, 3.141600009401316]
+
+
+real	0m41.273s
+user	0m41.227s
+sys	0m0.095s
+Loading polys/poly2a.poly... done
+
+threads = 2: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808254, -2.7182799317720137]
+
+
+real	0m21.076s
+user	0m40.487s
+sys	0m0.136s
+Loading polys/poly2a.poly... done
+
+threads = 3: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182797600463267, 3.141600181127003]
+
+
+real	0m14.215s
+user	0m40.973s
+sys	0m0.142s
+Loading polys/poly2a.poly... done
+
+threads = 4: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808254, -2.7182803878487056]
+
+
+real	0m11.088s
+user	0m42.668s
+sys	0m0.073s
+Loading polys/poly2a.poly... done
+
+threads = 5: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182795354481173, 3.1416004057252125]
+
+
+real	0m11.685s
+user	0m45.024s
+sys	0m0.099s
+Loading polys/poly2a.poly... done
+
+threads = 6: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.141599676580825, -2.7182797600463267]
+
+
+real	0m12.009s
+user	0m43.213s
+sys	0m0.104s
+Loading polys/poly2a.poly... done
+
+threads = 7: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182802053060784, 3.1415997358672514]
+
+
+real	0m11.155s
+user	0m42.499s
+sys	0m0.106s
+Loading polys/poly2a.poly... done
+
+threads = 8: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808254, -2.718280379089912]
+
+
+real	0m10.596s
+user	0m41.854s
+sys	0m0.069s
+Loading polys/poly2a.poly... done
+
+threads = 9: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182799228133976, 3.141600018359934]
+
+
+real	0m10.667s
+user	0m42.167s
+sys	0m0.101s
+Loading polys/poly2a.poly... done
+
+threads = 10: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808254, -2.7182795354481173]
+
+
+real	0m11.473s
+user	0m44.150s
+sys	0m0.164s
+Loading polys/poly2a.poly... done
+
+threads = 11: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182797317128062, 3.141600209460529]
+
+
+real	0m11.487s
+user	0m45.196s
+sys	0m0.083s
+Loading polys/poly2a.poly... done
+
+threads = 12: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.141599676580823, -2.718280117342772]
+
+
+real	0m11.570s
+user	0m45.563s
+sys	0m0.128s
+Loading polys/poly2a.poly... done
+
+threads = 13: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.7182800378534178, 3.1415999033199165]
+
+
+real	0m10.793s
+user	0m42.635s
+sys	0m0.162s
+Loading polys/poly2a.poly... done
+
+threads = 14: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808263, -2.718280205306083]
+
+
+real	0m10.930s
+user	0m42.687s
+sys	0m0.094s
+Loading polys/poly2a.poly... done
+
+threads = 15: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [-2.718279874585025, 3.1416000665883064]
+
+
+real	0m10.836s
+user	0m42.764s
+sys	0m0.165s
+Loading polys/poly2a.poly... done
+
+threads = 16: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6
+
+polys/poly2a.poly: +1.00000x^2-0.423320x^1-8.53975x^0 has 2 roots
+  [3.1415996765808254, -2.718280492500995]
+
+
+real	0m10.781s
+user	0m42.784s
+sys	0m0.097s
+
+
+
+QUESTION 3: Does adding more threads continue to speed up the program? Do more threads ever slow down the program slightly?  Why or why not?
+
+In general, adding more threads continues to speed up the program. 
+There are instances where adding another thread slows down the program slightly, but this is due to the variability in speed threads provide. 
+
+
+
+
+
+
+QUESTION 4: Does adding more threads increase the "system load", or is it constant regardless of the number of threads?  Why?
+
+While there are some fluctuations, the system load seems constant despite the number of threads. 
+System load deals with memory allocation, so having more threads won't affect it since allocated memory generally stays the same.
+
+
+
+
+
+
+
+BONUS
+=====
+
+QUESTION 5: Time your version of ThreadedSolver as you did for the full credit version. Is this additional layer of threading faster, slower, or roughly equivalent in performance? Why?
+
+(I changed the command line to include 2 polys instead of 1 to get a fair reading)
+
+Solver: threads = 4: range -1.0E9 to 1.0E9, 1.7E9 slices, precision = 1.0E-6, file.poly = poly2a.poly poly3.poly
+
+Solver Timing:  real	0m27.659s
+                user	1m45.613s
+                sys	0m0.125s
+
+
+
+YOUR Timing:    real	0m27.961s
+                user	1m46.695s
+                sys	0m0.325s
+
+Even with the additional threading layer, the performance was roughly the same speed. 
+The time to run the programs stays approximately the same since adding more threads leaves each thread with less to do and thus are simply waiting.
+
+
+
+
