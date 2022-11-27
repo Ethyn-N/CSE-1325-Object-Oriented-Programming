@@ -77,7 +77,6 @@ public class Polynomial {
     private void solveRecursive(double min, double max, int threadID, double slices, double precision, int recursion) {
         synchronized(lock) {
             LOG("ThreadID " + threadID + " recursion " + recursion + " at [" + min + "," + max + "]");
-            System.out.println("ThreadID " + threadID + " recursion " + recursion + " at [" + min + "," + max + "]");
         }
         double delta = (max - min) / slices;
         double x1 = min;
