@@ -6,7 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class Polynomial {
-    public static boolean log = true;   // Set true to print log messages
+    public static boolean log = false;   // Set true to print log messages
     public static void LOG(String s) {
         if(log) System.err.println("==> " + s);
     }
