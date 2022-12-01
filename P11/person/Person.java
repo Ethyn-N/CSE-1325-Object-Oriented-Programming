@@ -1,5 +1,7 @@
 package person;
 
+import java.util.Objects;
+
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +22,9 @@ public class Person {
         out.write(phone + '\n');
     }
 
+    public String name() {return name;}
+    public String phone() {return phone;}
+
     @Override
     public String toString() {
         return name;
@@ -27,31 +32,16 @@ public class Person {
 
     @Override
     public boolean equals(Object rhs) {
-        if (this == rhs) return true;
-        if (rhs == null) return false;
+        if(this == rhs) return true;
+        if(rhs == null) return false;
         if (this.getClass() != rhs.getClass()) return false;
-        Person person = (Person) rhs;
-
-        if (name == null)
-            if (person.name != null)
-                return false;
-
-        if (phone == null)
-            if (person.phone != null)
-                return false;
-        
-        if (!name.equals(person.name) || !phone.equals(person.phone))
-            return false;
-        
-        return true;
+        Person p = (Person) rhs;
+        return name.equals(p.name) && phone.equals(p.phone);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + (name == null ? 0 : name.hashCode());
-        hash = 31 * hash + (phone == null ? 0 : phone.hashCode());
-        return hash;
+        return Objects.hash(name, phone);
     }
 
     protected String name;
