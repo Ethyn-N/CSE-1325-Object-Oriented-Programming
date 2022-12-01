@@ -48,7 +48,11 @@ public class Emporium {
         int customerSize = Integer.parseInt(in.readLine());
 
         for(int i = 0; i < customerSize; i++) {
-            customers.add(new Customer(in));
+            Customer customer = new Customer(in);
+            customers.add(customer);
+            int favsize = Integer.parseInt(in.readLine());
+            for(int j = 0; j < favsize; j++)
+                favoriteServings.put(customer, new Serving(in));
         }
 
     }
@@ -82,8 +86,11 @@ public class Emporium {
 
         for(Customer customer : customers) {
             customer.save(out);
+            out.write("" + favoriteServings.get(customer).length + '\n');
+            for(Object serving : favoriteServings.get(customer)) {
+                ((Serving) serving).save(out);
+            }
         }
-
     }
 
     public void addCustomer(Customer customer) {
